@@ -53,3 +53,15 @@ Student.prototype.aprobarCurso = function (nuevoCurso) {
     this.cursosAprobados.push(nuevoCurso);
 
 }
+
+// creacion de los objetos para el prototipo
+const juanita = new Student (
+
+    "Juanita Alejandra",
+    15,
+    [
+        "Curso de introducción a la creación de videojuegos",
+        "Curso de creación de personajes",
+    ],
+
+);
