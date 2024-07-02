@@ -65,3 +65,30 @@ const juanita = new Student (
     ],
 
 );
+
+
+// CLASES
+
+class Student2 { // se crea el metodo "constructor()" para las clases y los "this" hacen referencia al prototipo de la clase "Student2"
+    constructor ({name, age, email, cursosAprobados = []}) { // los parametros entre "{}" para que sean objetos y asi sea mas facil registrarlos sin importar su orden de registro
+                            // "cursosAprobados" sera un array vacio ya que inicialmente los usuarios no tendran ninguno
+        this.name = name;
+        this.age = age;
+        this.email = email;
+        this.cursosAprobados = cursosAprobados;
+    }
+    aprobarCurso(nuevoCurso) { // se crea metodo para ingresar los nuevos cursos aprobados
+        this.cursosAprobados.push(nuevoCurso);
+    }
+}
+
+// creacion de los objetos para el prototipo de la clase "Student2"
+const miguel = new Student2 ({ // se crean con "{}" por ser onjetos los parametros
+
+    name: "Miguel",
+    email: "ejemplo@platzi.com",
+    age: 18,
+});
+
+// para agregar un nuevo curso aprobado para "miguel"
+//miguel.aprobarCurso("Curso de tableau");
