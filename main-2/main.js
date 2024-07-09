@@ -1,7 +1,20 @@
 class Course {
     constructor ({name, classes = []}) {
-        this.name = name;
+        this._name = name; // "_name" guion al piso para registrar que la propiedad sea mas privada al momento de realizarle alguna modificacion
         this.classes = classes;
+    }
+
+    // sintaxis para utilizar "get & set" para usar las propiedades que se requieran ser mas privadas
+    get name() {
+        return this._name;
+    }
+
+    set name (nuevoNom) { // condiciones dadas para revisar la modificacion a la propiedad privada
+        if (nuevoNom === "Nombre inapropiado para el curso") {
+            console.error("Error");
+        } else {
+            this._name = nuevoNom;
+        }
     }
 }
 
