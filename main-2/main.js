@@ -1,7 +1,36 @@
+function videoPlay (id) {
+    const urlSecreta = "https://urlvideosecreto.com " + id;
+    console.log("Se esta reporduciendo el video " + urlSecreta);
+}
+
+function videoPause (id) {
+    const urlSecreta = "https://urlvideosecreto.com " + id;
+    console.log("Video pausado " + urlSecreta);
+}
+
+// se registra "export" a la clase "PlatziClass" el cual va a referenciarla como la unica que podra ser utilizada desde el "index"
+/*export*/class PlatziClass {
+    constructor ({name, videoID}) {
+        this.name = name;
+        this.videoID = videoID;
+    }
+
+    reproducir() {
+        videoPlay(this.videoID);
+    }
+
+    pausar() {
+        videoPause(this.videoID);
+    }
+
+}
+
 class Course {
-    constructor ({name, classes = []}) {
+    constructor ({name, classes = [], isFree = false, lang = "spanish"}) {
         this._name = name; // "_name" guion al piso para registrar que la propiedad sea mas privada al momento de realizarle alguna modificacion
         this.classes = classes;
+        this.isFree = isFree;
+        this.lang = lang;
     }
 
     // sintaxis para utilizar "get & set" para usar las propiedades que se requieran ser mas privadas
@@ -20,6 +49,7 @@ class Course {
 
 const cursoProgBasica = new Course({
     name: "Curso gratuito de programacion basica",
+    isFree: true,
 });
 
 const cursoDefinitivoHTML = new Course({
@@ -28,6 +58,7 @@ const cursoDefinitivoHTML = new Course({
 
 const cursoPracticoHTML = new Course({
     name: "Curso practico de HTML y CSS",
+    lang: "english",
 });
 
 const cursoDataBus = new Course({
@@ -104,7 +135,47 @@ class Student {
     } // para las propiedades usadas con "this", finalizar con ";"
 }
 
-const juan2 = new Student ({
+// cada clase de las tres siguientes, heredara (extends) las propiedades de la clase Student
+class FreeStudent extends Student {
+    constructor(propiedades) { // se le nombra "propiedades" a lo que se recibira en los objetos "juan" y "miguelito"
+        super(propiedades); // se llama al metodo "super()" el cual hace referencia a la clase de donde se esta heredando
+    }                       // para enviarle las "propiedades" recibidas de los objetos "juan" y "miguelito"
+
+    approveCourse(newCourse) { // metodo para validar si el curso a tomar por el usuario con suscripcion gratuita, es efectivamente gratuito
+        if (newCourse.isFree) {
+            this.approvedCourses.push(newCourse);
+        } else {
+            console.warn("Lo sentimos, "+this.name+", solo puedes tomar cursos gratuitos");
+        }
+    }
+
+}
+
+class BasicStudent extends Student {
+    constructor(propiedades) {
+        super(propiedades);
+    }
+
+    approveCourse(newCourse) {
+        if (newCourse.lang !== "english") { // se valida si el lenguaje del curos (.lang) es en ingles
+            this.approvedCourses.push(newCourse);
+        } else {
+            console.warn("Lo sentimos, "+this.name+", solo puedes tomar cursos en español");
+        }
+    }
+}
+
+class ExpertStudent extends Student {
+    constructor(propiedades) {
+        super(propiedades);
+    }
+    
+    approveCourse(newCourse) { // para las suscripciones "ExpertStudent" tienen acceso a todos los cursos
+        this.approvedCourses.push(newCourse);
+    }
+}
+
+const juan = new FreeStudent ({
     name: "JuanDC",
     username: "juandc",
     email: "juanito@juan.com",
@@ -115,7 +186,7 @@ const juan2 = new Student ({
     ]
 });
 
-const miguelito2 = new Student ({
+const miguelito = new BasicStudent ({
     name: "Miguel",
     username: "miguelfeliz",
     email: "migue@miguel.com",
