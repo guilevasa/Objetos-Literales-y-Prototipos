@@ -1,3 +1,24 @@
+// clase creada para revisar el polimorfismo
+class Comment {
+    constructor ({
+        content,
+        studentName,
+        studentRole = "estudiante",
+    }) {
+        this.content = content;
+        this.studentName = studentName;
+        this.studentRole = studentRole;
+        this.likes = 0; // atributo adicional
+    }
+
+    publicar() { // metodo que muestra como sera la publicacion de los comentarios
+        console.log(this.studentName + " (" + this.studentRole + ")");
+        console.log(this.likes + " likes");
+        console.log(this.content);
+    }
+}
+
+
 function videoPlay (id) {
     const urlSecreta = "https://urlvideosecreto.com " + id;
     console.log("Se esta reporduciendo el video " + urlSecreta);
@@ -133,6 +154,14 @@ class Student {
         this.approvedCourses = approvedCourses;
         this.learningPaths = learningPaths;
     } // para las propiedades usadas con "this", finalizar con ";"
+
+    publicarComentario (commentContent) {
+        const comment = new Comment ({
+            content: commentContent,
+            studentName: this.name,
+        });
+        comment.publicar();
+    }
 }
 
 // cada clase de las tres siguientes, heredara (extends) las propiedades de la clase Student
@@ -175,6 +204,25 @@ class ExpertStudent extends Student {
     }
 }
 
+class TeacherStudent extends Student {
+    constructor(propiedades) {
+        super(propiedades);
+    }
+    
+    approveCourse(newCourse) { // para las suscripciones "ExpertStudent" tienen acceso a todos los cursos
+        this.approvedCourses.push(newCourse);
+    }
+
+    publicarComentario (commentContent) {
+        const comment = new Comment ({
+            content: commentContent,
+            studentName: this.name,
+            studentRole: "profesor",
+        });
+        comment.publicar();
+    }
+}
+
 const juan = new FreeStudent ({
     name: "JuanDC",
     username: "juandc",
@@ -195,4 +243,11 @@ const miguelito = new BasicStudent ({
         escuelaWeb,
         escuelaVgs
     ]
+});
+
+const freddy = new TeacherStudent ({
+    name: "Freddy",
+    username: "freddier",
+    email: "freddier@freddy.com",
+    facebook: "freddier",
 });
